@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🏗️  CastMate Deployment Script"
+echo "🏗️  Selfai Deployment Script"
 echo "================================"
 
 # Colors

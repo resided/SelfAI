@@ -1,8 +1,8 @@
-# CastMate - AI-Powered Farcaster Companion Miniapp
+# Selfai - AI-Powered Farcaster Companion Miniapp
 
-## 🎉 What is CastMate?
+## 🎉 What is Selfai?
 
-CastMate is a groundbreaking miniapp that brings AI companions to Farcaster. Users can mint, trade, and interact with tokenized AI agents that can post, reply, and engage on their behalf.
+Selfai is a groundbreaking miniapp that brings AI companions to Farcaster. Users can mint, trade, and interact with tokenized AI agents that can post, reply, and engage on their behalf.
 
 ## 🚀 Key Features
 
@@ -177,9 +177,9 @@ MIT License - see LICENSE file for details.
 
 ## 🗣️ Community
 
-- Discord: [CastMate Discord](https://discord.gg/castmate)
+- Discord: [Selfai Discord](https://discord.gg/castmate)
 - Warpcast: [@castmate](https://warpcast.com/castmate)
-- Twitter: [@CastMateAI](https://twitter.com/CastMateAI)
+- Twitter: [@SelfaiAI](https://twitter.com/SelfaiAI)
 
 ---
 

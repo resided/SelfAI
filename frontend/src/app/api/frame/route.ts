@@ -14,12 +14,12 @@ const frameHtml = `
   <meta property="fc:frame:button:3" content="📊 Dashboard" />
   <meta property="fc:frame:button:3:action" content="post" />
   <meta property="fc:frame:post_url" content="https://castmate.app/api/frame" />
-  <meta name="og:title" content="CastMate - AI Companion on Farcaster" />
+  <meta name="og:title" content="Selfai - AI Companion on Farcaster" />
   <meta name="og:description" content="Your AI-powered Butler on Farcaster. Mint, trade, and interact with AI companions." />
   <meta name="og:image" content="https://castmate.app/og.png" />
 </head>
 <body>
-  <h1>CastMate Frame</h1>
+  <h1>Selfai Frame</h1>
   <p>Loading...</p>
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
-  "name": "CastMate",
+  "name": "Selfai",
   "description": "Your AI-powered Farr companion with token-gated access",
-  "image": "ipfs://QmCastMateImage",
+  "image": "ipfs://QmSelfaiImage",
   "animation_url": "https://castmate.app/frame/mint",
   "attributes": [
     {

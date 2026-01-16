@@ -79,7 +79,7 @@ CONTRACT_ADDRESS = os.getenv("CASTMATE_CONTRACT_ADDRESS")
 WEB3_API_KEY = os.getenv("CASTMATE_WEB3_API_KEY")
 
 app = FastAPI(
-    title="CastMate API",
+    title="Selfai API",
     description="AI-powered Farcaster companion with token-gated access",
     version="1.0.0"
 )
@@ -120,7 +120,7 @@ Expertise: {', '.join(comp.get('expertise', ['general']))}
 @app.get("/")
 async def root():
     return {
-        "name": "CastMate API",
+        "name": "Selfai API",
         "version": "1.0.0",
         "description": "Tokenized AI companions for Farcaster",
         "endpoints": {
@@ -163,7 +163,7 @@ async def mint_companion(request: CompanionMintingRequest):
         return CompanionMintingResponse(
             success=True,
             token_id=token_id,
-            message=f"Successfully minted {request.name} as CastMate #{token_id}"
+            message=f"Successfully minted {request.name} as Selfai #{token_id}"
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

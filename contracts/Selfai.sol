@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract CastMate is ERC721, ERC721URIStorage, ERC721Enumerable, Ownable {
+contract Selfai is ERC721, ERC721URIStorage, ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
     
     Counters.Counter private _tokenIdCounter;
@@ -36,7 +36,7 @@ contract CastMate is ERC721, ERC721URIStorage, ERC721Enumerable, Ownable {
     event InteractionOccurred(uint256 indexed tokenId, string actionType);
     event CompanionUpdated(uint256 indexed tokenId, string newPersonality);
     
-    constructor() ERC721("CastMate", "CMATE") Ownable(msg.sender) {}
+    constructor() ERC721("Selfai", "CMATE") Ownable(msg.sender) {}
     
     function mintCompanion(
         string memory name,
@@ -81,7 +81,7 @@ contract CastMate is ERC721, ERC721URIStorage, ERC721Enumerable, Ownable {
             return aiCompanions[tokenId].approvedCallers[user] || ownerOf(tokenId) == user;
         }
         if (tier == 2) {
-            return balanceOf(user) > 0; // Must hold any CastMate NFT
+            return balanceOf(user) > 0; // Must hold any Selfai NFT
         }
         return true; // Tier 3 is public
     }
