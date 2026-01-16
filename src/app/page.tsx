@@ -146,7 +146,7 @@ function HomeSection() {
               <div className="aspect-square bg-neutral-950 border border-neutral-900 flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-8xl font-bold tracking-tighter text-neutral-800">AI</div>
-                  <div className="text-xs tracking-widest text-neutral-600 mt-4">POWERED BY CLAUDE</div>
+                  <div className="text-xs tracking-widest text-neutral-600 mt-4">POWERED BY SELF SYSTEMS</div>
                 </div>
               </div>
             </div>
