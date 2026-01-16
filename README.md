@@ -14,7 +14,7 @@ SelfAI is a groundbreaking miniapp that brings AI companions to Farcaster. Users
 
 ### 2. **Token-Gated Access**
 - **Private**: Only you can interact with your companion
-- **Token Holders**: Any CMATE NFT holder can interact
+- **Token Holders**: Any SELFAI NFT holder can interact
 - **Public**: Open to everyone
 
 ### 3. **AI Automation**
@@ -60,7 +60,7 @@ SelfAI is a groundbreaking miniapp that brings AI companions to Farcaster. Users
 
 ```bash
 # Clone the repository
-cd selfai
+cd SelfAI
 
 # Install frontend dependencies
 cd frontend
@@ -81,8 +81,8 @@ cp .env.example .env
 # Backend (.env)
 OPENAI_API_KEY=your_openai_api_key
 NEYNAR_API_KEY=your_neynar_api_key
-CASTMATE_CONTRACT_ADDRESS=your_contract_address
-CASTMATE_WEB3_API_KEY=your_web3_api_key
+SELF_AI_CONTRACT_ADDRESS=your_contract_address
+SELF_AI_WEB3_API_KEY=your_web3_api_key
 
 # Frontend (.env.local)
 NEXT_PUBLIC_API_URL=http://localhost:8000
@@ -179,7 +179,7 @@ MIT License - see LICENSE file for details.
 
 - Discord: [SelfAI Discord](https://discord.gg/selfai)
 - Warpcast: [@selfai](https://warpcast.com/selfai)
-- Twitter: [@SelfAIAI](https://twitter.com/SelfAIAI)
+- Twitter: [@SelfAI](https://twitter.com/SelfAI)
 
 ---
 
