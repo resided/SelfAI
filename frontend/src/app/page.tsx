@@ -66,7 +66,7 @@ export default function Home() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...mintForm,
-          system_prompt: `You are ${mintForm.name}, a ${mintForm.personality} AI companion on Faracster. ${mintForm.expertise.map(e => `Expert in ${e}.`).join(' ')}`,
+          system_prompt: `You are ${mintForm.name}, a ${mintForm.personality} AI companion on Farcaster. ${mintForm.expertise.map(e => `Expert in ${e}.`).join(' ')}`,
           fid: 12345
         })
       });
@@ -223,7 +223,7 @@ function LandingView({ onMint, onMarketplace, trending }: any) {
         >
           <span className="gradient-text">Your AI Butler</span>
           <br />
-          <span className="text-white/40">on Faracster</span>
+          <span className="text-white/40">on Farcaster</span>
         </motion.h2>
 
         <motion.p
@@ -276,7 +276,7 @@ function LandingView({ onMint, onMarketplace, trending }: any) {
           { title: 'Monetizable', desc: 'Earn from your companion interactions', icon: 'chart' },
           { title: 'Auto-Schedule', desc: 'Smart posting at optimal times', icon: 'clock' },
           { title: 'Custom Persona', desc: 'Design unique AI identities', icon: 'sparkle' },
-          { title: 'Native', desc: 'Built specifically for Faracster', icon: 'network' },
+          { title: 'Native', desc: 'Built specifically for Farcaster', icon: 'network' },
         ].map((feature, i) => (
           <FeatureCard key={i} feature={feature} index={i} />
         ))}
@@ -289,7 +289,7 @@ function LandingView({ onMint, onMarketplace, trending }: any) {
         className="glass rounded-3xl p-10 border border-white/10"
       >
         <div className="flex items-center justify-between mb-8">
-          <h3 className="text-2xl font-semibold">Trending on Faracster</h3>
+          <h3 className="text-2xl font-semibold">Trending on Farcaster</h3>
           <div className="flex items-center gap-2 text-white/40">
             <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
             Live
@@ -423,7 +423,7 @@ function MintView({ form, setForm, onMint, loading, onBack }: any) {
       >
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold mb-3">Create Your Companion</h2>
-          <p className="text-white/40">Design your AI alter ego for Faracster</p>
+          <p className="text-white/40">Design your AI alter ego for Farcaster</p>
         </div>
 
         <div className="space-y-8">
@@ -562,7 +562,7 @@ function DashboardView({ companions, onInteract }: { companions: Companion[]; on
           </div>
           <h3 className="text-2xl font-bold mb-3">No companions yet</h3>
           <p className="text-white/40 mb-8 max-w-md mx-auto">
-            Mint your first AI companion to get started with intelligent automation on Faracster.
+            Mint your first AI companion to get started with intelligent automation on Farcaster.
           </p>
           <motion.button
             className="btn-primary"
