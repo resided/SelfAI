@@ -1,37 +1,26 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Brain, Cpu, Zap, Shield, Users, TrendingUp, 
-  Sparkles, ArrowRight, ChevronRight, Menu, X,
-  Activity, BarChart3, Globe, Lock, Search,
-  Plus, Settings, Bell, ChevronDown, Check,
-  Eye, MessageSquare, Heart, Share2, MoreHorizontal, Star
+import {
+  Cpu, Zap, Shield, Users, TrendingUp,
+  ArrowRight, ChevronRight, Menu, X,
+  Activity, BarChart3, Search,
+  Plus, Bell, Heart, MoreHorizontal,
+  Layers, Target, Gauge, Workflow
 } from 'lucide-react';
 
 interface Stat {
   label: string;
   value: string;
-  change: string;
-  positive: boolean;
+  suffix?: string;
 }
 
 interface Feature {
-  icon: typeof Brain;
+  icon: typeof Cpu;
   title: string;
   description: string;
-  gradient: string;
-}
-
-interface Companion {
-  id: number;
-  name: string;
-  personality: string;
-  expertise: string[];
-  interactions: number;
-  tier: 'private' | 'holders' | 'public';
-  status: 'active' | 'idle';
+  color: string;
 }
 
 interface TrendingItem {
@@ -42,31 +31,50 @@ interface TrendingItem {
   rank: number;
 }
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1]
+    }
+  })
+};
+
+const stagger = {
+  visible: {
+    transition: {
+      staggerChildren: 0.08
+    }
+  }
+};
+
 export default function Home() {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const stats: Stat[] = [
-    { label: 'Active Agents', value: '12,847', change: '+24%', positive: true },
-    { label: 'Posts Created', value: '2.4M', change: '+18%', positive: true },
-    { label: 'Engagement Rate', value: '8.7%', change: '+2.3%', positive: true },
-    { label: 'Total Users', value: '48.2K', change: '+31%', positive: true },
+    { label: 'Active Agents', value: '12,847' },
+    { label: 'Posts Created', value: '2.4', suffix: 'M' },
+    { label: 'Avg Engagement', value: '8.7', suffix: '%' },
+    { label: 'Total Users', value: '48.2', suffix: 'K' },
   ];
 
   const features: Feature[] = [
-    { icon: Brain, title: 'Advanced Intelligence', description: 'GPT-4 and Claude-powered agents that understand context, nuance, and your unique voice.', gradient: 'from-violet-500 to-purple-500' },
-    { icon: Zap, title: 'Lightning Fast', description: 'Real-time processing with smart caching ensures your agents respond instantly.', gradient: 'from-amber-500 to-orange-500' },
-    { icon: TrendingUp, title: 'Trend Detection', description: 'Automatically surface and capitalize on trending topics in your niche.', gradient: 'from-emerald-500 to-teal-500' },
-    { icon: Shield, title: 'Content Safety', description: 'Built-in moderation and human-in-the-loop approval workflows.', gradient: 'from-blue-500 to-cyan-500' },
-    { icon: Users, title: 'Community Growth', description: 'Engage authentically with your audience while you focus on creating.', gradient: 'from-pink-500 to-rose-500' },
-    { icon: BarChart3, title: 'Deep Analytics', description: 'Comprehensive insights into performance, growth, and sentiment.', gradient: 'from-indigo-500 to-blue-500' },
-  ];
-
-  const companions: Companion[] = [
-    { id: 1, name: 'CryptoAgent', personality: 'Analytical', expertise: ['DeFi', 'Trading'], interactions: 1247, tier: 'holders', status: 'active' },
-    { id: 2, name: 'Web3Companion', personality: 'Helpful', expertise: ['NFTs', 'DAO'], interactions: 892, tier: 'public', status: 'active' },
-    { id: 3, name: 'TechInsight', personality: 'Witty', expertise: ['AI', 'Crypto'], interactions: 2156, tier: 'private', status: 'idle' },
+    { icon: Cpu, title: 'Advanced Intelligence', description: 'GPT-4 and Claude-powered agents that understand context, nuance, and your unique voice.', color: 'from-indigo-500/20 to-indigo-500/5' },
+    { icon: Zap, title: 'Lightning Fast', description: 'Real-time processing with smart caching ensures your agents respond instantly.', color: 'from-amber-500/20 to-amber-500/5' },
+    { icon: TrendingUp, title: 'Trend Detection', description: 'Automatically surface and capitalize on trending topics in your niche.', color: 'from-emerald-500/20 to-emerald-500/5' },
+    { icon: Shield, title: 'Content Safety', description: 'Built-in moderation and human-in-the-loop approval workflows.', color: 'from-cyan-500/20 to-cyan-500/5' },
+    { icon: Users, title: 'Community Growth', description: 'Engage authentically with your audience while you focus on creating.', color: 'from-pink-500/20 to-pink-500/5' },
+    { icon: BarChart3, title: 'Deep Analytics', description: 'Comprehensive insights into performance, growth, and sentiment.', color: 'from-violet-500/20 to-violet-500/5' },
   ];
 
   const trending: TrendingItem[] = [
@@ -76,33 +84,33 @@ export default function Home() {
     { id: 4, topic: 'New NFT collection breaks volume records', sentiment: 'positive', engagement: 2874, rank: 4 },
   ];
 
-  return (
-    <div ref={containerRef} className="min-h-screen animated-bg relative">
-      {/* Noise overlay */}
-      <div className="noise-overlay" />
+  if (!mounted) return null;
 
-      {/* Mesh gradient blobs */}
-      <div className="mesh-bg">
-        <div className="mesh-blob mesh-blob-1" />
-        <div className="mesh-blob mesh-blob-2" />
-        <div className="mesh-blob mesh-blob-3" />
+  return (
+    <div className="min-h-screen relative">
+      {/* Background layers */}
+      <div className="aurora-bg">
+        <div className="aurora-layer" />
+        <div className="aurora-layer aurora-layer-2" />
       </div>
+      <div className="grid-pattern" />
+      <div className="radial-glow" />
+      <div className="grain-overlay" />
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <motion.div 
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               className="flex items-center gap-3 cursor-pointer"
-              whileHover={{ scale: 1.02 }}
             >
-              <div className="relative">
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center border border-white/10">
-                  <Brain className="w-5 h-5 text-violet-400" />
-                </div>
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
+                <Layers className="w-4 h-4 text-white" />
               </div>
-              <span className="text-lg font-semibold tracking-tight">SelfAI</span>
+              <span className="text-base font-semibold tracking-tight">SelfAI</span>
             </motion.div>
 
             {/* Desktop nav */}
@@ -110,65 +118,52 @@ export default function Home() {
               {['Home', 'Create', 'Dashboard', 'Marketplace', 'Analytics'].map((item) => {
                 const isActive = activeSection === item.toLowerCase();
                 return (
-                  <motion.button
+                  <button
                     key={item}
                     onClick={() => setActiveSection(item.toLowerCase())}
-                    className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg ${
-                      isActive ? 'text-white' : 'text-white/50 hover:text-white'
+                    className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg ${
+                      isActive ? 'text-white' : 'text-white/40 hover:text-white/70'
                     }`}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
                   >
                     {isActive && (
                       <motion.div
-                        layoutId="nav-active"
-                        className="absolute inset-0 bg-white/10 rounded-lg"
-                        transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                        layoutId="nav-pill"
+                        className="absolute inset-0 bg-white/[0.06] rounded-lg"
+                        transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
                       />
                     )}
                     <span className="relative z-10">{item}</span>
-                  </motion.button>
+                  </button>
                 );
               })}
             </div>
 
             {/* Right side */}
-            <div className="flex items-center gap-3">
-              <motion.button
-                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Search className="w-4 h-4" />
-                <span className="text-white/60">Search...</span>
-              </motion.button>
+            <div className="flex items-center gap-2">
+              <button className="hidden sm:flex items-center gap-2 px-3 py-2 bg-white/[0.03] border border-white/[0.06] rounded-lg text-sm hover:bg-white/[0.06] transition-colors">
+                <Search className="w-4 h-4 text-white/40" />
+                <span className="text-white/40">Search</span>
+                <kbd className="hidden lg:inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-white/[0.04] rounded text-[10px] text-white/30 font-mono">
+                  /
+                </kbd>
+              </button>
 
-              <motion.button
-                className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors relative"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Bell className="w-4 h-4" />
-                <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-violet-500 rounded-full" />
-              </motion.button>
+              <button className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] transition-colors relative">
+                <Bell className="w-4 h-4 text-white/60" />
+                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-indigo-500 rounded-full" />
+              </button>
 
-              <motion.button
-                className="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-lg text-sm font-medium"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
+              <button className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-500 to-violet-600 rounded-lg text-sm font-medium hover:shadow-lg hover:shadow-indigo-500/20 transition-all">
                 <Plus className="w-4 h-4" />
-                Create Agent
-              </motion.button>
+                <span>Create</span>
+              </button>
 
-              {/* Mobile menu button */}
-              <motion.button
+              <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg bg-white/5 border border-white/10"
-                whileTap={{ scale: 0.95 }}
+                className="md:hidden p-2 rounded-lg bg-white/[0.03] border border-white/[0.06]"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </motion.button>
+              </button>
             </div>
           </div>
         </div>
@@ -180,7 +175,7 @@ export default function Home() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden border-t border-white/5"
+              className="md:hidden border-t border-white/[0.04]"
             >
               <div className="px-6 py-4 space-y-1">
                 {['Home', 'Create', 'Dashboard', 'Marketplace', 'Analytics'].map((item) => (
@@ -190,7 +185,7 @@ export default function Home() {
                       setActiveSection(item.toLowerCase());
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+                    className="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm text-white/50 hover:text-white hover:bg-white/[0.04] transition-colors"
                   >
                     {item}
                     <ChevronRight className="w-4 h-4" />
@@ -203,11 +198,13 @@ export default function Home() {
       </nav>
 
       {/* Main content */}
-      <main className="pt-24 pb-20 px-6 lg:px-8 max-w-7xl mx-auto">
+      <main className="relative z-10 pt-16">
         <AnimatePresence mode="wait">
-          {activeSection === 'home' && <HomeSection key="home" stats={stats} features={features} trending={trending} />}
+          {activeSection === 'home' && (
+            <HomeSection key="home" stats={stats} features={features} trending={trending} />
+          )}
           {activeSection === 'create' && <CreateSection key="create" />}
-          {activeSection === 'dashboard' && <DashboardSection key="dashboard" companions={companions} />}
+          {activeSection === 'dashboard' && <DashboardSection key="dashboard" />}
           {activeSection === 'marketplace' && <MarketplaceSection key="marketplace" />}
           {activeSection === 'analytics' && <AnalyticsSection key="analytics" />}
         </AnimatePresence>
@@ -216,194 +213,219 @@ export default function Home() {
   );
 }
 
-// ============================================
-// HOME SECTION
-// ============================================
-
 function HomeSection({ stats, features, trending }: { stats: Stat[]; features: Feature[]; trending: TrendingItem[] }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="space-y-24"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="pb-32"
     >
       {/* Hero */}
-      <section className="text-center max-w-4xl mx-auto pt-8">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass border border-white/10 mb-10"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500" />
-          </span>
-          <span className="text-xs text-white/60">Now live on Base</span>
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-8"
-        >
-          <span className="gradient-text">Your AI Agent</span>
-          <br />
-          <span className="text-white/40">That Works</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-lg sm:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed mb-12"
-        >
-          Create intelligent AI agents that post, engage, and grow your presence on Faracster. 
-          Powered by advanced language models with full customization.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <motion.button
-            className="group relative px-8 py-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-medium text-sm overflow-hidden"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+      <section className="min-h-[90vh] flex flex-col items-center justify-center px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto text-center">
+          {/* Status badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-12"
           >
-            <span className="relative z-10 flex items-center gap-2">
-              Create Your Agent
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-            </span>
-          </motion.button>
-          <motion.button
-            className="px-8 py-4 rounded-xl font-medium text-sm border border-white/10 bg-white/5 hover:bg-white/10 transition-colors flex items-center gap-2"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            <span className="status-dot status-live" />
+            <span className="text-sm text-white/50 font-medium">Now live on Base</span>
+          </motion.div>
+
+          {/* Main headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[clamp(3rem,8vw,6.5rem)] font-bold leading-[0.95] tracking-[-0.03em] mb-8"
           >
-            View Marketplace
-          </motion.button>
-        </motion.div>
+            <span className="gradient-text-hero">Your AI Agent</span>
+            <br />
+            <span className="text-white/20">That Actually Works</span>
+          </motion.h1>
 
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="flex items-center justify-center gap-8 sm:gap-16 mt-16 pt-8 border-t border-white/5"
-        >
-          {stats.map((stat, i) => (
-            <div key={i} className="text-center">
-              <div className="text-2xl sm:text-3xl font-bold gradient-text">{stat.value}</div>
-              <div className="text-xs sm:text-sm text-white/40 mt-1">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
-      </section>
+          {/* Subheadline */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="text-lg sm:text-xl text-white/40 max-w-2xl mx-auto leading-relaxed mb-14 font-light"
+          >
+            Create intelligent AI agents that post, engage, and grow your presence on Farcaster.
+            Powered by advanced language models with full customization.
+          </motion.p>
 
-      {/* Features Grid */}
-      <section>
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-3">Built for Scale</h2>
-          <p className="text-white/40">Everything you need to automate your Faracster presence</p>
+          {/* CTA buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <button className="group relative px-8 py-4 bg-white rounded-xl font-medium text-sm text-black overflow-hidden transition-transform hover:scale-[1.02] active:scale-[0.98]">
+              <span className="relative z-10 flex items-center gap-2">
+                Create Your Agent
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </button>
+            <button className="px-8 py-4 rounded-xl font-medium text-sm border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] transition-all hover:border-white/[0.12]">
+              View Documentation
+            </button>
+          </motion.div>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {features.map((feature, i) => {
-            const Icon = feature.icon;
-            return (
+
+        {/* Stats row */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7, duration: 0.8 }}
+          className="w-full max-w-4xl mx-auto mt-24"
+        >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16">
+            {stats.map((stat, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * i }}
-                className="group card"
+                transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
+                className="text-center"
               >
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-5 opacity-80 group-hover:opacity-100 transition-opacity`}>
-                  <Icon className="w-6 h-6 text-white" />
+                <div className="text-3xl sm:text-4xl font-semibold tracking-tight mb-2">
+                  <span className="text-white">{stat.value}</span>
+                  {stat.suffix && <span className="text-white/30">{stat.suffix}</span>}
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                <p className="text-sm text-white/50 leading-relaxed">{feature.description}</p>
+                <div className="text-sm text-white/30">{stat.label}</div>
               </motion.div>
-            );
-          })}
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Features */}
+      <section className="px-6 lg:px-8 py-32">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Built for Scale</h2>
+            <p className="text-lg text-white/40 max-w-xl mx-auto">
+              Everything you need to automate your Farcaster presence
+            </p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {features.map((feature, i) => {
+              const Icon = feature.icon;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: i * 0.08, duration: 0.5 }}
+                  className="group p-7 rounded-2xl bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.04] hover:border-white/[0.08] transition-all duration-500 cursor-pointer"
+                >
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-6`}>
+                    <Icon className="w-5 h-5 text-white/80" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-3 tracking-tight">{feature.title}</h3>
+                  <p className="text-sm text-white/40 leading-relaxed">{feature.description}</p>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Trending */}
-      <section className="card">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-xl font-semibold flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-amber-500" />
-              Trending Now
-            </h2>
-            <p className="text-sm text-white/40 mt-1">Hot topics on Faracster</p>
-          </div>
-          <div className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400">
-            <Activity className="w-3 h-3" />
-            Live
-          </div>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {trending.map((item, i) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1 * i }}
-              className="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/15 transition-all cursor-pointer"
-            >
-              <div className="flex items-start justify-between mb-3">
-                <span className="text-xs font-medium text-violet-400">#{item.rank}</span>
-                <span className={`text-xs px-2 py-0.5 rounded-full ${
-                  item.sentiment === 'positive' ? 'bg-emerald-500/20 text-emerald-400' :
-                  item.sentiment === 'negative' ? 'bg-red-500/20 text-red-400' :
-                  'bg-white/10 text-white/50'
-                }`}>
-                  {item.sentiment}
-                </span>
+      <section className="px-6 lg:px-8 py-16">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04]"
+          >
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-xl font-semibold tracking-tight flex items-center gap-3">
+                  <TrendingUp className="w-5 h-5 text-emerald-400" />
+                  Trending Now
+                </h2>
+                <p className="text-sm text-white/30 mt-1">Hot topics on Farcaster</p>
               </div>
-              <p className="text-sm text-white/70 line-clamp-3">{item.topic}</p>
-              <div className="flex items-center gap-3 mt-3 text-xs text-white/30">
-                <span className="flex items-center gap-1">
-                  <Heart className="w-3 h-3" />
-                  {item.engagement.toLocaleString()}
-                </span>
+              <div className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                <Activity className="w-3 h-3" />
+                Live
               </div>
-            </motion.div>
-          ))}
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {trending.map((item, i) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.4 }}
+                  className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all cursor-pointer group"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <span className="text-xs font-semibold text-indigo-400">#{item.rank}</span>
+                    <span className={`text-[10px] uppercase tracking-wider px-2 py-1 rounded-full font-medium ${
+                      item.sentiment === 'positive' ? 'bg-emerald-500/10 text-emerald-400' :
+                      item.sentiment === 'negative' ? 'bg-red-500/10 text-red-400' :
+                      'bg-white/[0.06] text-white/40'
+                    }`}>
+                      {item.sentiment}
+                    </span>
+                  </div>
+                  <p className="text-sm text-white/60 line-clamp-3 leading-relaxed group-hover:text-white/80 transition-colors">
+                    {item.topic}
+                  </p>
+                  <div className="flex items-center gap-1.5 mt-4 text-xs text-white/25">
+                    <Heart className="w-3.5 h-3.5" />
+                    {item.engagement.toLocaleString()}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="relative overflow-hidden rounded-3xl p-12 text-center">
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 via-fuchsia-600/20 to-cyan-600/20" />
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
-        <div className="relative z-10">
-          <h2 className="text-3xl font-bold mb-4">Ready to Scale?</h2>
-          <p className="text-white/60 mb-8 max-w-lg mx-auto">
-            Join thousands of creators using SelfAI to grow their Faracster presence
+      {/* Bottom CTA */}
+      <section className="px-6 lg:px-8 py-32">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">Ready to Scale?</h2>
+          <p className="text-lg text-white/40 mb-10 max-w-lg mx-auto">
+            Join thousands of creators using SelfAI to grow their Farcaster presence
           </p>
-          <motion.button
-            className="px-8 py-4 bg-white text-black rounded-xl font-medium text-sm hover:bg-white/90 transition-colors inline-flex items-center gap-2"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Get Started Free
-            <ArrowRight className="w-4 h-4" />
-          </motion.button>
-        </div>
+          <button className="group px-10 py-5 bg-white text-black rounded-2xl font-medium text-base hover:shadow-2xl hover:shadow-white/10 transition-all hover:scale-[1.02] active:scale-[0.98]">
+            <span className="flex items-center gap-2">
+              Get Started Free
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </button>
+        </motion.div>
       </section>
     </motion.div>
   );
 }
-
-// ============================================
-// CREATE SECTION
-// ============================================
 
 function CreateSection() {
   const [step, setStep] = useState(0);
@@ -411,7 +433,6 @@ function CreateSection() {
     name: '',
     personality: '',
     expertise: [] as string[],
-    tier: 1,
   });
 
   const personalities = [
@@ -428,479 +449,385 @@ function CreateSection() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="max-w-2xl mx-auto"
+      exit={{ opacity: 0 }}
+      className="min-h-screen pt-32 pb-20 px-6 lg:px-8"
     >
-      {/* Progress */}
-      <div className="flex items-center gap-2 mb-8">
-        {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="flex-1 h-1 rounded-full overflow-hidden bg-white/10">
-            <motion.div
-              className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500"
-              initial={{ width: '0%' }}
-              animate={{ width: i <= step ? '100%' : '0%' }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-        ))}
-      </div>
+      <div className="max-w-xl mx-auto">
+        {/* Progress */}
+        <div className="flex items-center gap-3 mb-12">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="flex-1 h-1 rounded-full overflow-hidden bg-white/[0.06]">
+              <motion.div
+                className="h-full bg-gradient-to-r from-indigo-500 to-violet-500"
+                initial={{ width: '0%' }}
+                animate={{ width: i <= step ? '100%' : '0%' }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </div>
+          ))}
+        </div>
 
-      <div className="card">
-        {step === 0 && (
-          <>
-            <h2 className="text-2xl font-bold mb-2">Name Your Agent</h2>
-            <p className="text-white/40 mb-8">Give your AI a memorable name</p>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              placeholder="e.g., CryptoMate, DeFi Wizard"
-              className="w-full px-5 py-4 bg-white/5 rounded-xl border border-white/10 focus:border-violet-500/50 outline-none transition-all mb-8"
-            />
-            <div className="flex justify-end">
-              <motion.button
-                onClick={() => setStep(1)}
-                disabled={formData.name.length < 2}
-                className="px-6 py-3 bg-white text-black rounded-lg font-medium disabled:opacity-50"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+        <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04]">
+          <AnimatePresence mode="wait">
+            {step === 0 && (
+              <motion.div
+                key="step0"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
               >
-                Continue
-              </motion.button>
-            </div>
-          </>
-        )}
+                <h2 className="text-2xl font-bold mb-2 tracking-tight">Name Your Agent</h2>
+                <p className="text-white/40 mb-8">Give your AI a memorable identity</p>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g., CryptoMate"
+                  className="w-full px-5 py-4 bg-white/[0.03] rounded-xl border border-white/[0.06] focus:border-indigo-500/50 outline-none transition-all mb-8"
+                />
+                <div className="flex justify-end">
+                  <button
+                    onClick={() => setStep(1)}
+                    disabled={formData.name.length < 2}
+                    className="px-6 py-3 bg-white text-black rounded-xl font-medium text-sm disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    Continue
+                  </button>
+                </div>
+              </motion.div>
+            )}
 
-        {step === 1 && (
-          <>
-            <h2 className="text-2xl font-bold mb-2">Choose Personality</h2>
-            <p className="text-white/40 mb-8">Define how your AI interacts</p>
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-8">
-              {personalities.map((p) => (
-                <motion.button
-                  key={p.value}
-                  onClick={() => setFormData({ ...formData, personality: p.value })}
-                  className={`p-4 rounded-xl text-left transition-all border ${
-                    formData.personality === p.value
-                      ? 'bg-violet-500/20 border-violet-500/50'
-                      : 'bg-white/5 border-white/10 hover:border-white/30'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="text-sm font-medium mb-1">{p.label}</div>
-                  <div className="text-xs text-white/40">{p.desc}</div>
-                </motion.button>
-              ))}
-            </div>
-            <div className="flex justify-between">
-              <motion.button
-                onClick={() => setStep(0)}
-                className="px-6 py-3 rounded-lg font-medium text-white/60 hover:text-white"
-                whileHover={{ scale: 1.02 }}
+            {step === 1 && (
+              <motion.div
+                key="step1"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
               >
-                Back
-              </motion.button>
-              <motion.button
-                onClick={() => setStep(2)}
-                disabled={!formData.personality}
-                className="px-6 py-3 bg-white text-black rounded-lg font-medium disabled:opacity-50"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Continue
-              </motion.button>
-            </div>
-          </>
-        )}
-
-        {step === 2 && (
-          <>
-            <h2 className="text-2xl font-bold mb-2">Select Expertise</h2>
-            <p className="text-white/40 mb-8">What topics should your AI know about?</p>
-            <div className="flex flex-wrap gap-2 mb-8">
-              {expertises.map((e) => (
-                <motion.button
-                  key={e}
-                  onClick={() => {
-                    const newExp = formData.expertise.includes(e)
-                      ? formData.expertise.filter(x => x !== e)
-                      : [...formData.expertise, e];
-                    setFormData({ ...formData, expertise: newExp });
-                  }}
-                  className={`px-4 py-2 rounded-full text-sm transition-all border ${
-                    formData.expertise.includes(e)
-                      ? 'bg-violet-500/20 border-violet-500/50 text-violet-300'
-                      : 'bg-white/5 border-white/10 hover:border-white/30'
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {e}
-                </motion.button>
-              ))}
-            </div>
-            <div className="flex justify-between">
-              <motion.button
-                onClick={() => setStep(1)}
-                className="px-6 py-3 rounded-lg font-medium text-white/60 hover:text-white"
-                whileHover={{ scale: 1.02 }}
-              >
-                Back
-              </motion.button>
-              <motion.button
-                onClick={() => setStep(3)}
-                disabled={formData.expertise.length === 0}
-                className="px-6 py-3 bg-white text-black rounded-lg font-medium disabled:opacity-50"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Continue
-              </motion.button>
-            </div>
-          </>
-        )}
-
-        {step === 3 && (
-          <>
-            <h2 className="text-2xl font-bold mb-2">Review</h2>
-            <p className="text-white/40 mb-8">Your agent is ready</p>
-            <div className="space-y-4 mb-8">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <div className="text-xs text-white/40 mb-1">Name</div>
-                <div className="font-semibold">{formData.name}</div>
-              </div>
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <div className="text-xs text-white/40 mb-1">Personality</div>
-                <div className="capitalize">{formData.personality}</div>
-              </div>
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <div className="text-xs text-white/40 mb-2">Expertise</div>
-                <div className="flex flex-wrap gap-2">
-                  {formData.expertise.map((e) => (
-                    <span key={e} className="px-2 py-1 rounded-full bg-violet-500/20 text-violet-300 text-sm">{e}</span>
+                <h2 className="text-2xl font-bold mb-2 tracking-tight">Choose Personality</h2>
+                <p className="text-white/40 mb-8">Define how your AI interacts</p>
+                <div className="grid grid-cols-2 gap-3 mb-8">
+                  {personalities.map((p) => (
+                    <button
+                      key={p.value}
+                      onClick={() => setFormData({ ...formData, personality: p.value })}
+                      className={`p-4 rounded-xl text-left transition-all border ${
+                        formData.personality === p.value
+                          ? 'bg-indigo-500/10 border-indigo-500/30'
+                          : 'bg-white/[0.02] border-white/[0.04] hover:border-white/[0.1]'
+                      }`}
+                    >
+                      <div className="text-sm font-medium mb-1">{p.label}</div>
+                      <div className="text-xs text-white/40">{p.desc}</div>
+                    </button>
                   ))}
                 </div>
-              </div>
-            </div>
-            <div className="flex justify-between">
-              <motion.button
-                onClick={() => setStep(2)}
-                className="px-6 py-3 rounded-lg font-medium text-white/60 hover:text-white"
-                whileHover={{ scale: 1.02 }}
+                <div className="flex justify-between">
+                  <button onClick={() => setStep(0)} className="px-6 py-3 text-white/50 hover:text-white transition-colors">
+                    Back
+                  </button>
+                  <button
+                    onClick={() => setStep(2)}
+                    disabled={!formData.personality}
+                    className="px-6 py-3 bg-white text-black rounded-xl font-medium text-sm disabled:opacity-30 transition-all"
+                  >
+                    Continue
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
+            {step === 2 && (
+              <motion.div
+                key="step2"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
               >
-                Back
-              </motion.button>
-              <motion.button
-                className="px-6 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-lg font-medium"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                <h2 className="text-2xl font-bold mb-2 tracking-tight">Select Expertise</h2>
+                <p className="text-white/40 mb-8">What topics should your AI know about?</p>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {expertises.map((e) => (
+                    <button
+                      key={e}
+                      onClick={() => {
+                        const newExp = formData.expertise.includes(e)
+                          ? formData.expertise.filter(x => x !== e)
+                          : [...formData.expertise, e];
+                        setFormData({ ...formData, expertise: newExp });
+                      }}
+                      className={`px-4 py-2.5 rounded-full text-sm transition-all border ${
+                        formData.expertise.includes(e)
+                          ? 'bg-indigo-500/10 border-indigo-500/30 text-indigo-300'
+                          : 'bg-white/[0.02] border-white/[0.04] hover:border-white/[0.1]'
+                      }`}
+                    >
+                      {e}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex justify-between">
+                  <button onClick={() => setStep(1)} className="px-6 py-3 text-white/50 hover:text-white transition-colors">
+                    Back
+                  </button>
+                  <button
+                    onClick={() => setStep(3)}
+                    disabled={formData.expertise.length === 0}
+                    className="px-6 py-3 bg-white text-black rounded-xl font-medium text-sm disabled:opacity-30 transition-all"
+                  >
+                    Continue
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
+            {step === 3 && (
+              <motion.div
+                key="step3"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
               >
-                Create Agent
-              </motion.button>
-            </div>
-          </>
-        )}
+                <h2 className="text-2xl font-bold mb-2 tracking-tight">Review</h2>
+                <p className="text-white/40 mb-8">Your agent is ready to deploy</p>
+                <div className="space-y-4 mb-8">
+                  <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <div className="text-xs text-white/30 uppercase tracking-wider mb-2">Name</div>
+                    <div className="font-semibold">{formData.name}</div>
+                  </div>
+                  <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <div className="text-xs text-white/30 uppercase tracking-wider mb-2">Personality</div>
+                    <div className="capitalize">{formData.personality}</div>
+                  </div>
+                  <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <div className="text-xs text-white/30 uppercase tracking-wider mb-3">Expertise</div>
+                    <div className="flex flex-wrap gap-2">
+                      {formData.expertise.map((e) => (
+                        <span key={e} className="px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-sm">{e}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-between">
+                  <button onClick={() => setStep(2)} className="px-6 py-3 text-white/50 hover:text-white transition-colors">
+                    Back
+                  </button>
+                  <button className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-violet-600 rounded-xl font-medium text-sm hover:shadow-lg hover:shadow-indigo-500/20 transition-all">
+                    Create Agent
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </motion.div>
   );
 }
 
-// ============================================
-// DASHBOARD SECTION
-// ============================================
+function DashboardSection() {
+  const stats = [
+    { label: 'Total Posts', value: '127', icon: Workflow },
+    { label: 'Replies', value: '342', icon: Cpu },
+    { label: 'Engagement', value: '8.7%', icon: Target },
+    { label: 'Followers', value: '+89', icon: Users },
+  ];
 
-function DashboardSection({ companions }: { companions: Companion[] }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      exit={{ opacity: 0 }}
+      className="min-h-screen pt-32 pb-20 px-6 lg:px-8"
     >
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h2 className="text-3xl font-bold">Dashboard</h2>
-          <p className="text-white/40">Manage your agents</p>
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold tracking-tight mb-2">Dashboard</h1>
+          <p className="text-white/40">Manage and monitor your agents</p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-white/40">
-          <span>{companions.length} agent{companions.length !== 1 ? 's' : ''}</span>
-        </div>
-      </div>
 
-      {/* Stats */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Total Posts', value: '127', icon: MessageSquare, color: 'violet' },
-          { label: 'Replies', value: '342', icon: Brain, color: 'cyan' },
-          { label: 'Engagement', value: '8.7%', icon: TrendingUp, color: 'emerald' },
-          { label: 'Followers', value: '+89', icon: Users, color: 'pink' },
-        ].map((stat, i) => {
-          const Icon = stat.icon;
-          return (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * i }}
-              className="card"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className={`w-10 h-10 rounded-lg bg-${stat.color}-500/20 flex items-center justify-center`}>
-                  <Icon className={`w-5 h-5 text-${stat.color}-400`} />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          {stats.map((stat, i) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]"
+              >
+                <div className="flex items-center justify-between mb-5">
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.04] flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-white/50" />
+                  </div>
+                  <span className="text-xs text-white/25">This week</span>
                 </div>
-                <span className="text-xs text-white/30">This week</span>
-              </div>
-              <div className="text-2xl font-bold mb-1">{stat.value}</div>
-              <div className="text-sm text-white/40">{stat.label}</div>
-            </motion.div>
-          );
-        })}
-      </div>
+                <div className="text-2xl font-bold mb-1">{stat.value}</div>
+                <div className="text-sm text-white/40">{stat.label}</div>
+              </motion.div>
+            );
+          })}
+        </div>
 
-      {/* Agents */}
-      {companions.length === 0 ? (
-        <div className="card text-center py-16">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-violet-500/20 flex items-center justify-center">
-            <Brain className="w-8 h-8 text-violet-400" />
+        <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04] text-center">
+          <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-violet-500/10 flex items-center justify-center">
+            <Cpu className="w-7 h-7 text-indigo-400" />
           </div>
-          <h3 className="text-xl font-bold mb-2">No agents yet</h3>
-          <p className="text-white/40 mb-6">Create your first AI agent</p>
-          <motion.button
-            className="px-6 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-lg font-medium inline-flex items-center gap-2"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
+          <h3 className="text-xl font-semibold mb-2">No agents yet</h3>
+          <p className="text-white/40 mb-6 max-w-sm mx-auto">Create your first AI agent to start automating your Farcaster presence</p>
+          <button className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-violet-600 rounded-xl font-medium text-sm inline-flex items-center gap-2 hover:shadow-lg hover:shadow-indigo-500/20 transition-all">
             <Plus className="w-4 h-4" />
             Create Agent
-          </motion.button>
+          </button>
         </div>
-      ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {companions.map((companion, i) => (
-            <motion.div
-              key={companion.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * i }}
-              className="card"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center">
-                    <Brain className="w-6 h-6 text-violet-400" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">{companion.name}</h3>
-                    <p className="text-sm text-white/40 capitalize">{companion.personality}</p>
-                  </div>
-                </div>
-                <button className="p-1.5 rounded-lg hover:bg-white/5 transition-colors">
-                  <MoreHorizontal className="w-4 h-4 text-white/40" />
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {companion.expertise.map((e) => (
-                  <span key={e} className="text-xs px-2 py-1 rounded-full bg-white/5">{e}</span>
-                ))}
-              </div>
-              <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                <div className="flex items-center gap-3 text-sm text-white/30">
-                  <span className="flex items-center gap-1">
-                    <MessageSquare className="w-4 h-4" />
-                    {companion.interactions}
-                  </span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${
-                    companion.tier === 'private' ? 'bg-white/10 text-white/40' :
-                    companion.tier === 'holders' ? 'bg-cyan-500/20 text-cyan-400' :
-                    'bg-emerald-500/20 text-emerald-400'
-                  }`}>
-                    {companion.tier}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <motion.button
-                    className="p-2 rounded-lg bg-violet-500/20"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Sparkles className="w-4 h-4 text-violet-400" />
-                  </motion.button>
-                  <motion.button
-                    className="p-2 rounded-lg bg-cyan-500/20"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <MessageSquare className="w-4 h-4 text-cyan-400" />
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      )}
+      </div>
     </motion.div>
   );
 }
-
-// ============================================
-// MARKETPLACE SECTION
-// ============================================
 
 function MarketplaceSection() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      exit={{ opacity: 0 }}
+      className="min-h-screen pt-32 pb-20 px-6 lg:px-8"
     >
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div>
-          <h2 className="text-3xl font-bold">Marketplace</h2>
-          <p className="text-white/40">Discover and trade AI agents</p>
-        </div>
-        <div className="flex items-center gap-3">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12">
+          <div>
+            <h1 className="text-4xl font-bold tracking-tight mb-2">Marketplace</h1>
+            <p className="text-white/40">Discover and deploy pre-built agents</p>
+          </div>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
             <input
               type="text"
-              placeholder="Search..."
-              className="pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-violet-500/50 outline-none text-sm w-64"
+              placeholder="Search agents..."
+              className="pl-11 pr-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06] focus:border-indigo-500/50 outline-none text-sm w-64"
             />
           </div>
         </div>
-      </div>
 
-      <section>
-        <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-amber-500" />
-          Featured
-        </h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * i }}
-              className="card group cursor-pointer"
+              transition={{ delay: i * 0.08 }}
+              className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all cursor-pointer group"
             >
-              <div className="flex items-start justify-between mb-4">
+              <div className="flex items-start justify-between mb-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center">
-                    <Brain className="w-5 h-5 text-violet-400" />
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/10 flex items-center justify-center">
+                    <Cpu className="w-5 h-5 text-indigo-400" />
                   </div>
                   <div>
                     <h4 className="font-medium">Agent #{i}</h4>
-                    <p className="text-xs text-white/40">Created 2 days ago</p>
+                    <p className="text-xs text-white/30">by creator.eth</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1 text-xs">
-                  <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                  <span>4.9</span>
-                </div>
+                <button className="p-1.5 rounded-lg hover:bg-white/[0.04] transition-colors opacity-0 group-hover:opacity-100">
+                  <MoreHorizontal className="w-4 h-4 text-white/40" />
+                </button>
               </div>
-              <p className="text-sm text-white/50 mb-4 line-clamp-2">
-                A sophisticated AI agent specialized in web3 and crypto discussions.
+              <p className="text-sm text-white/40 mb-5 line-clamp-2 leading-relaxed">
+                A sophisticated AI agent specialized in web3 and crypto market analysis.
               </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {['Web3', 'DeFi', 'Crypto'].map((e) => (
-                  <span key={e} className="text-xs px-2 py-1 rounded-full bg-white/5">{e}</span>
+              <div className="flex flex-wrap gap-2 mb-5">
+                {['Web3', 'DeFi'].map((tag) => (
+                  <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-white/[0.04] text-white/50">{tag}</span>
                 ))}
               </div>
-              <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                <span className="text-sm text-white/30">128 interactions</span>
-                <motion.button
-                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-sm font-medium"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
+              <div className="flex items-center justify-between pt-5 border-t border-white/[0.04]">
+                <span className="text-sm text-white/25">128 deployments</span>
+                <button className="px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-violet-600 text-sm font-medium">
                   0.05 ETH
-                </motion.button>
+                </button>
               </div>
             </motion.div>
           ))}
         </div>
-      </section>
+      </div>
     </motion.div>
   );
 }
 
-// ============================================
-// ANALYTICS SECTION
-// ============================================
-
 function AnalyticsSection() {
+  const data = [40, 65, 45, 80, 55, 90, 70, 85, 60, 75, 95, 80];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      exit={{ opacity: 0 }}
+      className="min-h-screen pt-32 pb-20 px-6 lg:px-8"
     >
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold">Analytics</h2>
-        <p className="text-white/40">Track your performance</p>
-      </div>
-
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Total Posts', value: '127', change: '+12%', positive: true },
-          { label: 'Replies', value: '342', change: '+8%', positive: true },
-          { label: 'Engagement', value: '8.7%', change: '+2.3%', positive: true },
-          { label: 'Followers', value: '+89', change: '+15%', positive: true },
-        ].map((stat, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 * i }}
-            className="card"
-          >
-            <div className="text-sm text-white/40 mb-2">{stat.label}</div>
-            <div className="text-2xl font-bold mb-2">{stat.value}</div>
-            <div className={`text-sm ${stat.positive ? 'text-emerald-400' : 'text-red-400'}`}>
-              {stat.change} from last week
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      <div className="grid lg:grid-cols-2 gap-6">
-        <div className="card">
-          <h3 className="font-semibold mb-6">Engagement Over Time</h3>
-          <div className="h-64 flex items-end gap-2">
-            {[40, 65, 45, 80, 55, 90, 70, 85, 60, 75, 95, 80].map((h, i) => (
-              <motion.div
-                key={i}
-                className="flex-1 bg-gradient-to-t from-violet-500/50 to-violet-300/50 rounded-t-lg"
-                initial={{ height: 0 }}
-                animate={{ height: `${h}%` }}
-                transition={{ delay: 0.05 * i, duration: 0.5 }}
-              />
-            ))}
-          </div>
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold tracking-tight mb-2">Analytics</h1>
+          <p className="text-white/40">Track your performance and growth</p>
         </div>
-        <div className="card">
-          <h3 className="font-semibold mb-6">Top Topics</h3>
-          <div className="space-y-4">
-            {['Web3', 'DeFi', 'AI Agents', 'Base Network', 'NFTs'].map((topic, i) => (
-              <div key={topic} className="flex items-center gap-4">
-                <span className="text-sm text-white/40 w-5">{i + 1}</span>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-medium">{topic}</span>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {[
+            { label: 'Total Posts', value: '127', change: '+12%' },
+            { label: 'Replies', value: '342', change: '+8%' },
+            { label: 'Engagement', value: '8.7%', change: '+2.3%' },
+            { label: 'Followers', value: '+89', change: '+15%' },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]"
+            >
+              <div className="text-sm text-white/40 mb-2">{stat.label}</div>
+              <div className="text-2xl font-bold mb-2">{stat.value}</div>
+              <div className="text-sm text-emerald-400">{stat.change} from last week</div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-6">
+          <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04]">
+            <h3 className="font-semibold mb-8">Engagement Over Time</h3>
+            <div className="h-64 flex items-end gap-2">
+              {data.map((h, i) => (
+                <motion.div
+                  key={i}
+                  className="flex-1 bg-gradient-to-t from-indigo-500/60 to-indigo-400/30 rounded-t"
+                  initial={{ height: 0 }}
+                  animate={{ height: `${h}%` }}
+                  transition={{ delay: 0.05 * i, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04]">
+            <h3 className="font-semibold mb-8">Top Topics</h3>
+            <div className="space-y-5">
+              {['Web3', 'DeFi', 'AI Agents', 'Base Network', 'NFTs'].map((topic, i) => (
+                <div key={topic}>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm">{topic}</span>
                     <span className="text-xs text-white/40">{100 - i * 15}%</span>
                   </div>
-                  <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+                  <div className="h-2 rounded-full bg-white/[0.04] overflow-hidden">
                     <motion.div
-                      className="h-full bg-gradient-to-r from-violet-500 to-cyan-500"
+                      className="h-full bg-gradient-to-r from-indigo-500 to-cyan-400"
                       initial={{ width: 0 }}
                       animate={{ width: `${100 - i * 15}%` }}
-                      transition={{ delay: 0.2 + 0.1 * i, duration: 0.5 }}
+                      transition={{ delay: 0.3 + 0.1 * i, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     />
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
