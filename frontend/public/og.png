@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050507;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a0f;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c084fc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="secondaryGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle Grid -->
+  <g opacity="0.05">
+    <line x1="0" y1="157.5" x2="1200" y2="157.5" stroke="#c084fc" stroke-width="0.5"/>
+    <line x1="0" y1="315" x2="1200" y2="315" stroke="#c084fc" stroke-width="0.5"/>
+    <line x1="0" y1="472.5" x2="1200" y2="472.5" stroke="#c084fc" stroke-width="0.5"/>
+    <line x1="300" y1="0" x2="300" y2="630" stroke="#22d3ee" stroke-width="0.5"/>
+    <line x1="600" y1="0" x2="600" y2="630" stroke="#22d3ee" stroke-width="0.5"/>
+    <line x1="900" y1="0" x2="900" y2="630" stroke="#22d3ee" stroke-width="0.5"/>
+  </g>
+  
+  <!-- Left Hexagon Glow -->
+  <polygon points="200,150 340,220 340,410 200,480 60,410 60,220" fill="url(#accentGrad)" opacity="0.1" filter="url(#glow)"/>
+  <polygon points="200,150 340,220 340,410 200,480 60,410 60,220" fill="none" stroke="url(#accentGrad)" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Right Hexagon Glow -->
+  <polygon points="1000,150 1140,220 1140,410 1000,480 860,410 860,220" fill="url(#secondaryGrad)" opacity="0.1" filter="url(#glow)"/>
+  <polygon points="1000,150 1140,220 1140,410 1000,480 860,410 860,220" fill="none" stroke="url(#secondaryGrad)" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Main Logo Area -->
+  <g transform="translate(525, 240)">
+    <!-- Outer Ring -->
+    <circle cx="75" cy="75" r="70" fill="none" stroke="url(#accentGrad)" stroke-width="2" opacity="0.3"/>
+    <circle cx="75" cy="75" r="55" fill="none" stroke="url(#secondaryGrad)" stroke-width="1.5" opacity="0.4"/>
+    
+    <!-- Inner Core -->
+    <circle cx="75" cy="75" r="40" fill="#0d0d14" stroke="url(#accentGrad)" stroke-width="2"/>
+    
+    <!-- AI Neural Network -->
+    <circle cx="75" cy="75" r="8" fill="url(#accentGrad)" filter="url(#glow)"/>
+    <circle cx="75" cy="75" r="4" fill="#0d0d14"/>
+    
+    <!-- Orbiting Nodes -->
+    <circle cx="75" cy="40" r="4" fill="url(#secondaryGrad)"/>
+    <circle cx="102" cy="65" r="4" fill="url(#secondaryGrad)"/>
+    <circle cx="95" cy="95" r="4" fill="url(#secondaryGrad)"/>
+    <circle cx="55" cy="95" r="4" fill="url(#secondaryGrad)"/>
+    <circle cx="48" cy="65" r="4" fill="url(#secondaryGrad)"/>
+    
+    <!-- Connections -->
+    <line x1="75" y1="67" x2="75" y2="44" stroke="url(#accentGrad)" stroke-width="1" opacity="0.5"/>
+    <line x1="83" y1="73" x2="98" y2="65" stroke="url(#accentGrad)" stroke-width="1" opacity="0.5"/>
+    <line x1="83" y1="77" x2="91" y2="91" stroke="url(#accentGrad)" stroke-width="1" opacity="0.5"/>
+    <line x1="67" y1="77" x2="59" y2="91" stroke="url(#accentGrad)" stroke-width="1" opacity="0.5"/>
+    <line x1="67" y1="73" x2="52" y2="65" stroke="url(#accentGrad)" stroke-width="1" opacity="0.5"/>
+  </g>
+  
+  <!-- Speech Waves -->
+  <g opacity="0.4">
+    <path d="M 450 180 Q 525 140 600 180" fill="none" stroke="url(#secondaryGrad)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 410 150 Q 525 100 640 150" fill="none" stroke="url(#secondaryGrad)" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 490 210 Q 525 195 560 210" fill="none" stroke="url(#accentGrad)" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="600" y="400" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" fill="white">
+    CastMate
+  </text>
+  
+  <!-- Subtitle with Gradient -->
+  <defs>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c084fc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22d3ee;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <text x="600" y="455" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="url(#textGrad)">
+    Your AI Butler on Faracster
+  </text>
+  
+  <!-- Bottom Tagline -->
+  <text x="600" y="520" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="white" opacity="0.4">
+    Mint. Trade. Automate.
+  </text>
+  
+  <!-- Corner Accents -->
+  <path d="M 60 570 L 40 570 L 40 550" fill="none" stroke="url(#accentGrad)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 1140 570 L 1160 570 L 1160 550" fill="none" stroke="url(#accentGrad)" stroke-width="2" stroke-linecap="round"/>
+</svg>

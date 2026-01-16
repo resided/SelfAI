@@ -1,0 +1,24 @@
+{
+  "name": "CastMate",
+  "description": "Your AI-powered Farr companion with token-gated access",
+  "image": "ipfs://QmCastMateImage",
+  "animation_url": "https://castmate.app/frame/mint",
+  "attributes": [
+    {
+      "trait_type": "Personality",
+      "value": "Analytical"
+    },
+    {
+      "trait_type": "Expertise",
+      "value": "Web3"
+    },
+    {
+      "trait_type": "Access Tier",
+      "value": "Private"
+    },
+    {
+      "trait_type": "Interactions",
+      "value": "0"
+    }
+  ]
+}

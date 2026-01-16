@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#12121a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d0d14;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c084fc;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="secondaryGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="innerGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    
+    <clipPath id="hexClip">
+      <polygon points="256,32 448,144 448,368 256,480 64,368 64,144"/>
+    </clipPath>
+  </defs>
+  
+  <!-- Background Hexagon -->
+  <polygon points="256,32 448,144 448,368 256,480 64,368 64,144" fill="url(#bgGrad)" stroke="#1a1a24" stroke-width="2"/>
+  
+  <!-- Subtle Grid Pattern -->
+  <g opacity="0.08">
+    <line x1="64" y1="144" x2="448" y2="144" stroke="#c084fc" stroke-width="0.5"/>
+    <line x1="64" y1="256" x2="448" y2="256" stroke="#c084fc" stroke-width="0.5"/>
+    <line x1="64" y1="368" x2="448" y2="368" stroke="#c084fc" stroke-width="0.5"/>
+    <line x1="160" y1="64" x2="160" y2="448" stroke="#22d3ee" stroke-width="0.5"/>
+    <line x1="256" y1="32" x2="256" y2="480" stroke="#22d3ee" stroke-width="0.5"/>
+    <line x1="352" y1="64" x2="352" y2="448" stroke="#22d3ee" stroke-width="0.5"/>
+  </g>
+  
+  <!-- Outer Ring -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="url(#accentGrad)" stroke-width="1.5" opacity="0.3"/>
+  <circle cx="256" cy="256" r="160" fill="none" stroke="url(#secondaryGrad)" stroke-width="1" opacity="0.4"/>
+  
+  <!-- Inner Core -->
+  <circle cx="256" cy="256" r="120" fill="#0d0d14" stroke="url(#accentGrad)" stroke-width="2" filter="url(#glow)"/>
+  
+  <!-- AI Neural Network Nodes -->
+  <g>
+    <!-- Center Node -->
+    <circle cx="256" cy="256" r="20" fill="url(#accentGrad)" filter="url(#innerGlow)"/>
+    <circle cx="256" cy="256" r="12" fill="#0d0d14"/>
+    <circle cx="256" cy="256" r="6" fill="#c084fc"/>
+    
+    <!-- Orbiting Nodes -->
+    <circle cx="256" cy="156" r="8" fill="url(#secondaryGrad)"/>
+    <circle cx="336" cy="220" r="8" fill="url(#secondaryGrad)"/>
+    <circle cx="316" cy="316" r="8" fill="url(#secondaryGrad)"/>
+    <circle cx="196" cy="316" r="8" fill="url(#secondaryGrad)"/>
+    <circle cx="176" cy="220" r="8" fill="url(#secondaryGrad)"/>
+    
+    <!-- Connection Lines -->
+    <line x1="256" y1="236" x2="256" y2="164" stroke="url(#accentGrad)" stroke-width="1" opacity="0.5"/>
+    <line x1="276" y1="246" x2="328" y2="228" stroke="url(#accentGrad)" stroke-width="1" opacity="0.5"/>
+    <line x1="276" y1="266" x2="308" y2="308" stroke="url(#accentGrad)" stroke-width="1" opacity="0.5"/>
+    <line x1="236" y1="266" x2="204" y2="308" stroke="url(#accentGrad)" stroke-width="1" opacity="0.5"/>
+    <line x1="236" y1="246" x2="184" y2="228" stroke="url(#accentGrad)" stroke-width="1" opacity="0.5"/>
+  </g>
+  
+  <!-- Speech/Communication Waves -->
+  <g opacity="0.6">
+    <path d="M 200 120 Q 256 100 312 120" fill="none" stroke="url(#secondaryGrad)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 180 100 Q 256 72 332 100" fill="none" stroke="url(#secondaryGrad)" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M 220 140 Q 256 128 292 140" fill="none" stroke="url(#accentGrad)" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Diamond Accent (blockchain/precious) -->
+  <polygon points="256,88 280,120 256,152 232,120" fill="none" stroke="url(#secondaryGrad)" stroke-width="1.5" opacity="0.8"/>
+  <polygon points="256,96 272,120 256,144 240,120" fill="url(#secondaryGrad)" opacity="0.3"/>
+  
+  <!-- Corner Accents -->
+  <path d="M 80 160 L 64 144 L 80 128" fill="none" stroke="url(#accentGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 432 160 L 448 144 L 432 128" fill="none" stroke="url(#accentGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 80 352 L 64 368 L 80 384" fill="none" stroke="url(#accentGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 432 352 L 448 368 L 432 384" fill="none" stroke="url(#accentGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Small floating particles -->
+  <circle cx="112" cy="200" r="2" fill="#c084fc" opacity="0.6"/>
+  <circle cx="400" cy="312" r="2" fill="#22d3ee" opacity="0.6"/>
+  <circle cx="128" cy="344" r="1.5" fill="#a855f7" opacity="0.5"/>
+  <circle cx="384" cy="168" r="1.5" fill="#06b6d4" opacity="0.5"/>
+</svg>

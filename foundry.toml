@@ -1,0 +1,9 @@
+[profile.default]
+src = "out"
+solc = "0.8.20"
+libs = ["lib"]
+remappings = ["@openzeppelin/=lib/openzeppelin-contracts/"]
+
+[etherscan]
+base-sepolia = { key = "${BASESCAN_API_KEY}" }
+base = { key = "${BASESCAN_API_KEY}" }
