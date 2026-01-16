@@ -1,8 +1,8 @@
 {
-  "name": "Selfai",
+  "name": "SelfAI",
   "description": "Your AI-powered Farr companion with token-gated access",
-  "image": "ipfs://QmSelfaiImage",
-  "animation_url": "https://castmate.app/frame/mint",
+  "image": "ipfs://QmSelfAIImage",
+  "animation_url": "https://selfai.app/frame/mint",
   "attributes": [
     {
       "trait_type": "Personality",

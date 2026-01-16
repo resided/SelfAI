@@ -13,14 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Selfai | AI Companion on Faracster",
+  title: "SelfAI | AI Companion on Faracster",
   description: "Your AI-powered Butler on Faracster. Mint, trade, and interact with intelligent companions.",
   icons: {
     icon: "/favicon.svg",
     apple: "/favicon.svg",
   },
   openGraph: {
-    title: "Selfai | AI Companion on Faracster",
+    title: "SelfAI | AI Companion on Faracster",
     description: "Your AI-powered Butler on Faracster",
     images: [{ url: "/og.png" }],
   },

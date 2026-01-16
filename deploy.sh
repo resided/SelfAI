@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🏗️  Selfai Deployment Script"
+echo "🏗️  SelfAI Deployment Script"
 echo "================================"
 
 # Colors

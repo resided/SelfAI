@@ -106,7 +106,7 @@ export default function Home() {
             <div className="relative">
               <div className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-cyan-500/20" />
-                <img src="/logo.svg" alt="Selfai" className="w-8 h-8 relative z-10" />
+                <img src="/logo.svg" alt="SelfAI" className="w-8 h-8 relative z-10" />
               </div>
               <motion.div
                 className="absolute inset-0 rounded-xl"
@@ -115,7 +115,7 @@ export default function Home() {
               />
             </div>
             <div>
-              <h1 className="text-xl font-semibold tracking-tight">Selfai</h1>
+              <h1 className="text-xl font-semibold tracking-tight">SelfAI</h1>
               <p className="text-xs text-white/40">AI Companion</p>
             </div>
           </motion.div>
@@ -558,7 +558,7 @@ function DashboardView({ companions, onInteract }: { companions: Companion[]; on
           className="glass rounded-3xl p-20 text-center border border-white/10"
         >
           <div className="w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-500/20 to-cyan-500/20 flex items-center justify-center">
-            <img src="/logo.svg" alt="Selfai" className="w-14 h-14" />
+            <img src="/logo.svg" alt="SelfAI" className="w-14 h-14" />
           </div>
           <h3 className="text-2xl font-bold mb-3">No companions yet</h3>
           <p className="text-white/40 mb-8 max-w-md mx-auto">

@@ -1,8 +1,8 @@
-# Selfai - AI-Powered Farcaster Companion Miniapp
+# SelfAI - AI-Powered Farcaster Companion Miniapp
 
-## 🎉 What is Selfai?
+## 🎉 What is SelfAI?
 
-Selfai is a groundbreaking miniapp that brings AI companions to Farcaster. Users can mint, trade, and interact with tokenized AI agents that can post, reply, and engage on their behalf.
+SelfAI is a groundbreaking miniapp that brings AI companions to Farcaster. Users can mint, trade, and interact with tokenized AI agents that can post, reply, and engage on their behalf.
 
 ## 🚀 Key Features
 
@@ -60,7 +60,7 @@ Selfai is a groundbreaking miniapp that brings AI companions to Farcaster. Users
 
 ```bash
 # Clone the repository
-cd castmate
+cd selfai
 
 # Install frontend dependencies
 cd frontend
@@ -177,9 +177,9 @@ MIT License - see LICENSE file for details.
 
 ## 🗣️ Community
 
-- Discord: [Selfai Discord](https://discord.gg/castmate)
-- Warpcast: [@castmate](https://warpcast.com/castmate)
-- Twitter: [@SelfaiAI](https://twitter.com/SelfaiAI)
+- Discord: [SelfAI Discord](https://discord.gg/selfai)
+- Warpcast: [@selfai](https://warpcast.com/selfai)
+- Twitter: [@SelfAIAI](https://twitter.com/SelfAIAI)
 
 ---
 
